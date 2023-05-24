@@ -1,0 +1,25 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: cms_borja_db
+      username: cms_borja_user
+      password: cms_borja_password
+
+aws:
+  access_key: 1234
+  secret_key: secretKey
+  s3:
+    bucket_name: cms-bucket
+    region: eu-west-3
+    service_endpoint: http://localhost:4566
+    url_expiration_days: 1
+    cache_age_days: 30
+
+
+cms-borja:
+  app:
+    jwtCookieName: cms-borja
+    jwtSecret: cms-borja-SecretKey
+    jwtExpirationMs: 86400000
