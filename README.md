@@ -11,6 +11,8 @@ I tried to follow the hexagonal architecture (bu it could be improved, for sure)
 # Endpoints Definition
 All the available endpoints are completely described into the openapi.yml file that could be found [here](/docs/api/openapi.yml)
 
+Besides that, a postman collection is available [here](/docs/postman-collection/cms-borja.json)
+
 # About testing
 Currently, it only has:
 - One unit test example for the RemoveArticleAdapter
