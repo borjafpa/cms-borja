@@ -29,6 +29,8 @@ dependencies {
 	implementation 'com.amazonaws:aws-java-sdk:1.12.472'
 
 	implementation 'io.cucumber:cucumber-jvm:7.12.0'
+	implementation 'io.cucumber:cucumber-java:7.12.0'
+
 	implementation 'io.cucumber:cucumber-spring:7.12.0'
 
 	testImplementation 'io.cucumber:cucumber-junit:7.12.0'
@@ -37,6 +39,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mongodb'
+
+	testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
+
 }
 
 tasks.named('test') {
@@ -53,6 +58,8 @@ tasks.register('testIntegration', Test) {
 
 	useJUnitPlatform()
 
+	exclude()
+
 	testLogging {
 		events "passed"
 	}
@@ -61,7 +68,7 @@ tasks.register('testIntegration', Test) {
 sourceSets {
 	testIntegration {
 		java.srcDir file("src/testIntegration/java")
-		resources.srcDir file("src/testIntegration/resources")
+		resources.srcDir file("src/testIntegration/resourcesIntegration")
 		runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.test.runtimeClasspath
 		compileClasspath += sourceSets.main.compileClasspath + sourceSets.test.compileClasspath
 	}
@@ -72,3 +79,4 @@ idea {
 		sourceSets.testIntegration.allSource.srcDirs.each { srcDir -> module.testSourceDirs += srcDir }
 	}
 }
+

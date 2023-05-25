@@ -4,6 +4,7 @@ import com.borja.cms.application.article.dtos.RemovedArticleDTO;
 import com.borja.cms.domain.article.model.Status;
 import com.borja.cms.infrastructure.article.output.mongo.ArticleMongoRepository;
 import com.borja.cms.infrastructure.article.output.mongo.entity.Article;
+import com.borja.cms.infrastructure.article.output.repository.RemoveArticleAdapter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
