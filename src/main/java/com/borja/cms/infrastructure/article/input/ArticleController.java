@@ -30,7 +30,8 @@ public class ArticleController {
         CreateArticleUseCase.Output output = createArticleUseCase.handle(new CreateArticleUseCase.Input(request.title(), request.content(), authentication.getName()));
 
         return ResponseEntity.ok()
-                .body(new CreateArticleResponse(output.id(), output.title(), output.content(), output.status(), output.createdAt()));
+                .body(new CreateArticleResponse(output.id(), output.title(), output.content(), output.status(),
+                        String.valueOf(output.createdAt().getTime())));
     }
 
     @DeleteMapping("/{articleId}")

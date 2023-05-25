@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.0'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'idea'
 }
 
 group = 'com.borja'
@@ -18,9 +19,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// Kafka
-	implementation 'org.apache.kafka:kafka-streams'
-
 	// Encode / Decode user password
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
@@ -30,13 +28,47 @@ dependencies {
 	// AWS - s3
 	implementation 'com.amazonaws:aws-java-sdk:1.12.472'
 
+	implementation 'io.cucumber:cucumber-jvm:7.12.0'
+	implementation 'io.cucumber:cucumber-spring:7.12.0'
+
+	testImplementation 'io.cucumber:cucumber-junit:7.12.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:kafka'
 	testImplementation 'org.testcontainers:mongodb'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.register('testIntegration', Test) {
+	description = 'Runs integration tests.'
+	group = 'verification'
+
+	testClassesDirs = sourceSets.testIntegration.output.classesDirs
+	classpath = sourceSets.testIntegration.runtimeClasspath
+	shouldRunAfter test
+
+	useJUnitPlatform()
+
+	testLogging {
+		events "passed"
+	}
+}
+
+sourceSets {
+	testIntegration {
+		java.srcDir file("src/testIntegration/java")
+		resources.srcDir file("src/testIntegration/resources")
+		runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.test.runtimeClasspath
+		compileClasspath += sourceSets.main.compileClasspath + sourceSets.test.compileClasspath
+	}
+}
+
+idea {
+	module {
+		sourceSets.testIntegration.allSource.srcDirs.each { srcDir -> module.testSourceDirs += srcDir }
+	}
 }

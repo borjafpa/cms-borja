@@ -40,10 +40,4 @@ public class ImageController {
                 .body(new UploadImageResponse(output.id(), output.name(), output.path(), output.createdAt()));
     }
 
-    @PostMapping("other-upload")
-    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile image, Authentication authentication) {
-
-        return ResponseEntity.ok().build();
-    }
-
 }
