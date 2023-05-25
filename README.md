@@ -9,7 +9,7 @@ Thi is the backend for a content management system build with:
 I tried to follow the hexagonal architecture (bu it could be improved, for sure)
 
 # Endpoints Definition
-All the available endpoints are completely described into the openapi.yml file that could be found [here](openapi.yml)
+All the available endpoints are completely described into the openapi.yml file that could be found [here](/docs/api/openapi.yml)
 
 # About testing
 Currently, it only has:
