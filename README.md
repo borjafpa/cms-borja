@@ -77,9 +77,19 @@ aws --endpoint-url="http://localhost:4566" s3 ls s3://cms-bucket
 ```
 
 # About testing
-Currently, it only have:
+Currently, it only has:
 - One unit test example for the RemoveArticleAdapter
 - One integration test example for the RemoveArticleUseCase
+
+Unit test could be executed:
+```shell
+./gradlew test
+```
+
+Integration test could be executed:
+```shell
+./gradlew testIntegration
+```
 
 # References
 - About spring boot with mongodb: https://github.com/amrutprabhu/spring-boot-3-with-mongodb/
