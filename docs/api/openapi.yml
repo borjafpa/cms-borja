@@ -1,0 +1,236 @@
+openapi: 3.0.1
+info:
+  description: Microservice to manage content
+  license:
+    name: Apache 2.0
+    url: http://springdoc.org
+  title: Content Management System
+  version: v1.0.0
+servers:
+  - description: Local url
+    url: http://localhost:8080
+paths:
+  /auth/v1/sign-up:
+    post:
+      operationId: signUpUser
+      summary: Create a user if the username does not exist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+      responses:
+        "200":
+          description: Created
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SignUpResponse'
+          description: Bad request
+        "500":
+          description: Internal Server Error
+      tags:
+        - Authentication
+  /auth/v1/sign-in:
+    post:
+      operationId: signInUser
+      summary: Login a user if the credentials are correct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+      responses:
+        "200":
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: JWT cookie created for the user logged in
+          description: Logged In
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+      tags:
+        - Authentication
+  /auth/v1/sign-out:
+    post:
+      operationId: signOutUser
+      summary: Logout the current user
+      responses:
+        "200":
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: JWT cookie
+          description: Logged Out
+        "500":
+          description: Internal Server Error
+      tags:
+        - Authentication
+  /article/v1:
+    post:
+      operationId: createArticle
+      summary: Create an article for the authenticated user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateArticleRequest'
+      responses:
+        "200":
+          description: Created
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreateArticleResponse'
+          description: Bad request
+        "500":
+          description: Internal Server Error
+      tags:
+        - Articles
+  /article/v1/{articleId}:
+    delete:
+      operationId: removeArticle
+      summary: Set an article as removed for the authenticated user if the user is the owner
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          description: Article Id to be set as removed
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Removed
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+      tags:
+        - Articles
+  /image/v1/upload/{articleId}/{type}:
+    post:
+      operationId: uploadImage
+      summary: Upload an image for an specific article Id and type provided
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          description: Article Id to add an image
+          schema:
+            type: integer
+        - name: type
+          in: path
+          required: true
+          description: Type of image to upload
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              description: Image file to upload
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Uploaded
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UploadImageResponse'
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+      tags:
+        - Articles
+components:
+  schemas:
+    SignUpRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: first_user
+        password:
+          type: string
+          example: 12345
+    SignUpResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: error_code
+        message:
+          type: string
+          example: error_message
+    SignInRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: first_user
+        password:
+          type: string
+          example: 12345
+    CreateArticleRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Article's title
+        content:
+          type: string
+          example: Article's content
+    CreateArticleResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: Article's title
+        content:
+          type: string
+          example: Article's content
+        status:
+          type: string
+          enum:
+            - CREATED
+            - REMOVED
+            - ENABLED
+        createdAt:
+          type: string
+          format: timestamp
+          example: 1596060920
+    UploadImageResponse:
+      type: object
+      properties:
+        imageId:
+          type: number
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: abcdef
+        path:
+          type: string
+          example: bucket/a/b/c/
+        createdAt:
+          type: string
+          format: timestamp
+          example: 1596060920
