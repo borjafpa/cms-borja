@@ -9,7 +9,22 @@ Thi is the backend for a content management system build with:
 I tried to follow the hexagonal architecture (bu it could be improved, for sure)
 
 # Endpoints Definition
-All the available endpoints are completely described into the openapi.yml file that could be found into the docs/api directory
+All the available endpoints are completely described into the openapi.yml file that could be found [here](openapi.yml)
+
+# About testing
+Currently, it only has:
+- One unit test example for the RemoveArticleAdapter
+- One integration test example for the RemoveArticleUseCase
+
+Unit test could be executed:
+```shell
+./gradlew test
+```
+
+Integration test could be executed:
+```shell
+./gradlew testIntegration
+```
 
 # Local setup
 1. Start all the local stack
@@ -74,21 +89,6 @@ aws --endpoint-url=http://localhost:4566 s3 mb s3://cms-bucket --region eu-west-
 - After that, to list the information on the bucket:
 ```shell
 aws --endpoint-url="http://localhost:4566" s3 ls s3://cms-bucket
-```
-
-# About testing
-Currently, it only has:
-- One unit test example for the RemoveArticleAdapter
-- One integration test example for the RemoveArticleUseCase
-
-Unit test could be executed:
-```shell
-./gradlew test
-```
-
-Integration test could be executed:
-```shell
-./gradlew testIntegration
 ```
 
 # References
