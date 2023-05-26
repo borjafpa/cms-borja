@@ -93,6 +93,11 @@ aws --endpoint-url=http://localhost:4566 s3 mb s3://cms-bucket --region eu-west-
 aws --endpoint-url="http://localhost:4566" s3 ls s3://cms-bucket
 ```
 
+# TODOs
+- [] Complete testing (unit and integration)
+- [] Include validations for incoming information into API endpoints
+- [] Evaluate kafka usage for asynchronous processing of article images
+
 # References
 - About spring boot with mongodb: https://github.com/amrutprabhu/spring-boot-3-with-mongodb/
 - About spring security: https://www.bezkoder.com/spring-boot-security-jwt/
